@@ -1,7 +1,12 @@
-// It should take two command line arguments:
+// set up your required modules
+const request = require('request');
+const fs = require('fs');
 
+// get command line arguments and split it up into variables
 let arguments = process.argv;
 arguments.splice(0, 2);
+let myURL = arguments[0];
+let myLocalFilePath = arguments[1];
 
 // a URL
 // a local file path
@@ -10,20 +15,26 @@ arguments.splice(0, 2);
 // > node fetcher.js http://www.example.edu/ ./index.html
 // Downloaded and saved 3261 bytes to ./index.html
 
+let content = "";
+
+
+request(myURL, (error, response, body) => {
+  console.log('error:', error); // Print the error if one occurred
+  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  content = body;
+});
+
 
 // WRITE CODE
 
-const fs = require('fs');
-let fileName = "testFile.txt";
-const content = ('Some NEW content!' + arguments[0] + arguments[1]);
-
-fs.writeFile(`/Users/max/Desktop/${fileName}`, content, err => {
+fs.writeFile(myLocalFilePath, content, err => {
   if (err) {
     console.error(err);
   }
   // file written successfully
 });
 
+console.log(`Downloaded and saved ${content.length} bytes to ${myLocalFilePath}!`);
 
 
 // There are two operations in this problem which will take an unknown amount of time:
