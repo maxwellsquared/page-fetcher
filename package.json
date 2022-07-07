@@ -1,0 +1,19 @@
+{
+  "name": "page-fetcher",
+  "version": "1.0.0",
+  "description": "Gets pages from online (the best source for pages)",
+  "main": "fetcher.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxwellsquared/page-fetcher.git"
+  },
+  "author": "Max K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maxwellsquared/page-fetcher/issues"
+  },
+  "homepage": "https://github.com/maxwellsquared/page-fetcher#readme"
+}
