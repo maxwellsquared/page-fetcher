@@ -5,8 +5,11 @@ const fs = require('fs');
 // get command line arguments and split it up into variables
 let arguments = process.argv;
 arguments.splice(0, 2);
-let myURL = arguments[0];
-let myLocalFilePath = arguments[1];
+let myURL = "http://www.example.edu/";
+let myLocalFilePath = "./myFile.html"
+if (arguments[0]) myURL = arguments[0];
+if (arguments[1]) myLocalFilePath = arguments[1];
+
 
 // a URL
 // a local file path
@@ -17,24 +20,34 @@ let myLocalFilePath = arguments[1];
 
 let content = "";
 
-
 request(myURL, (error, response, body) => {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  if (response.statusCode == 200) console.log("Great success!");
+  if (response.statusCode != 200) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  }
   content = body;
+  fs.writeFile(myLocalFilePath, content, err => {
+    if (err) {
+      console.log("File writing error!")
+      console.error(err);
+    }
+    // file written successfully
+    
+  });
+  
+  
 });
+
+setTimeout(() => {
+  console.log(`Downloaded and saved ${content.length} bytes to ${myLocalFilePath}!`);
+}, 2000 );
+
 
 
 // WRITE CODE
 
-fs.writeFile(myLocalFilePath, content, err => {
-  if (err) {
-    console.error(err);
-  }
-  // file written successfully
-});
 
-console.log(`Downloaded and saved ${content.length} bytes to ${myLocalFilePath}!`);
 
 
 // There are two operations in this problem which will take an unknown amount of time:
